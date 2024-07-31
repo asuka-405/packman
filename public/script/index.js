@@ -5,7 +5,7 @@ import initializeSearch from "./tasks/search.js"
 import { initializeSidebar } from "./tasks/sidebar.js"
 
 document.addEventListener("DOMContentLoaded", () => {
-  window.router = new Router({ defaultPage: "home", loader: LOADER })
+  window.router = new Router({ defaultPage: "search", loader: LOADER })
   window.addEventListener("scroll", updateScrollProgress)
   window.router.bindCallback("*", handleHighlightedImages)
   window.router.bindCallback("*", toggleScrollProgress)

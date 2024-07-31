@@ -44,17 +44,17 @@ export const handler = async (event) => {
   if (core) core = core.file
   else core = undefined
 
-  // const db = new DB(core)
-  // const pkgName = params.get("name")
-  // const isInDB = db.search(pkgName).length ? true : false
+  const db = new DB(core)
+  const pkgName = params.get("name")
+  const isInDB = db.search(pkgName).length ? true : false
 
-  // if (isInDB)
-  //   return {
-  //     statusCode: 400,
-  //     body: JSON.stringify({
-  //       error: `Package ${pkgName} already exists in the database`,
-  //     }),
-  //   }
+  if (isInDB)
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: `Package ${pkgName} already exists in the database`,
+      }),
+    }
 
   // db.append({
   //   name: params.get("name"),

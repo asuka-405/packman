@@ -2,7 +2,6 @@ import dotenv from "dotenv"
 if (process.env.NODE_ENV === "development") dotenv.config()
 
 import { MongoClient, ServerApiVersion } from "mongodb"
-import DB from "../db.js"
 
 const uri =
   "mongodb+srv://" +
@@ -28,7 +27,6 @@ export const handler = async (event) => {
   })
   if (core) core = core.file
   else core = undefined
-  console.log(core)
   return {
     statusCode: 200,
     body: JSON.stringify(core),

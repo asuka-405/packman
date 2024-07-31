@@ -1,6 +1,11 @@
 import dotenv from "dotenv"
 import { MongoClient, ServerApiVersion } from "mongodb"
-import DB from "../db.js"
+import {
+  appendPackageToDbFile,
+  dbFileToPackageList,
+  packageListToDbFile,
+  searchDbFile,
+} from "../db.js"
 if (process.env.NODE_ENV === "development") dotenv.config()
 
 const URL = `mongodb+srv://${process.env.ATLAS_UNAME}:${process.env.ATLAS_PASSWD}@cluster0.c0p6hl1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
@@ -44,40 +49,38 @@ export const handler = async (event) => {
   if (core) core = core.file
   else core = undefined
 
-  const db = new DB(core)
-  // const pkgName = params.get("name")
-  // const isInDB = db.search(pkgName).length ? true : false
+  const packageList = dbFileToPackageList(core)
+  const packageName = params.get("name")
+  const isInDB = searchDbFile(packageList, packageName).length ? true : false
 
-  // if (isInDB)
-  //   return {
-  //     statusCode: 400,
-  //     body: JSON.stringify({
-  //       error: `Package ${pkgName} already exists in the database`,
-  //     }),
-  //   }
+  if (isInDB)
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: `Package ${pkgName} already exists in the database`,
+      }),
+    }
 
-  // db.append({
-  //   name: params.get("name"),
-  //   repo: params.get("repo"),
-  //   description: params.get("description"),
-  //   author: params.get("author"),
-  //   dist: params.get("dist"),
-  //   keywords: params.get("keywords"),
-  // })
+  appendPackageToDbFile(core, {
+    name: params.get("name"),
+    repo: params.get("repo"),
+    description: params.get("description"),
+    author: params.get("author"),
+    dist: params.get("dist"),
+    keywords: params.get("keywords"),
+  })
 
-  // core = db.getDBFile()
+  await remoteDB.updateOne(
+    { name: "core.db" },
+    { $set: { file: core } },
+    { upsert: true }
+  )
 
-  // await remoteDB.updateOne(
-  //   { name: "core.db" },
-  //   { $set: { file: core } },
-  //   { upsert: true }
-  // )
-
-  // return {
-  //   statusCode: 200,
-  //   body: JSON.stringify({
-  //     message: `Package ${pkgName} registered successfully`,
-  //     // core,
-  //   }),
-  // }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Package ${pkgName} registered successfully`,
+      core,
+    }),
+  }
 }

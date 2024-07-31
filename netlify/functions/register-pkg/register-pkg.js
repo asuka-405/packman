@@ -65,7 +65,7 @@ export const handler = async (event) => {
     keywords: params.get("keywords"),
   })
 
-  core = db.getDBFile()
+  // core = db.getDBFile()
 
   // await remoteDB.updateOne(
   //   { name: "core.db" },
@@ -77,7 +77,7 @@ export const handler = async (event) => {
     statusCode: 200,
     body: JSON.stringify({
       message: `Package ${pkgName} registered successfully`,
-      core,
+      // core,
     }),
   }
 }

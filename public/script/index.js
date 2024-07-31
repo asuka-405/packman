@@ -21,10 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload()
     }
   })
-  window.router.bindCleanUp("login", () => {
-    console.log("Closing modal")
-    netlifyIdentity.close()
-  })
   initializeSidebar()
   if (localStorage.getItem("coreDB") && localStorage.getItem("lastUpdated")) {
     const lastUpdated = localStorage.getItem("lastUpdated")

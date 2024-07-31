@@ -71,19 +71,6 @@ export default class Router {
   navigateTo(path) {
     // Prevent navigation if already in the process of navigating
     if (this.#navigating) return
-    this.#cleanUpCallbacks.forEach((callback) => {
-      const path = window.location.pathname
-      const page = path.slice(1) // Remove leading slash
-
-      if (!page) this.navigateTo(`/`)
-      if (
-        !path.includes(callback.path) &&
-        callback.path !== "*" &&
-        !page.includes(callback.path)
-      )
-        return
-      callback.callback(...callback.args)
-    })
     const newUrl = `${path}`
     history.pushState(null, null, newUrl)
     this.handleRoute()
@@ -101,8 +88,5 @@ export default class Router {
 
   bindCallback(path, callback, ...args) {
     this.#renderCallbacks.push({ path, callback, args })
-  }
-  bindCleanUp(path, callback, ...args) {
-    this.#cleanUpCallbacks.push({ path, callback, args })
   }
 }

@@ -73,11 +73,11 @@ export const handler = async (event) => {
   //   { upsert: true }
   // )
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: `Package ${pkgName} registered successfully`,
-      // core,
-    }),
-  }
+  // return {
+  //   statusCode: 200,
+  //   body: JSON.stringify({
+  //     message: `Package ${pkgName} registered successfully`,
+  //     // core,
+  //   }),
+  // }
 }

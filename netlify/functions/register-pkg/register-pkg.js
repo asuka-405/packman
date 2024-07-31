@@ -37,8 +37,8 @@ export const handler = async (event) => {
       }),
     }
 
-  // await client.connect()
-  // const remoteDB = client.db("packman-repo").collection("packages")
+  await client.connect()
+  const remoteDB = client.db("packman-repo").collection("packages")
 
   // let core = await remoteDB.findOne({ name: "core.db" })
   // if (core) core = core.file

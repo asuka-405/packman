@@ -1,0 +1,38 @@
+.search
+  padding: 0 1em
+  #search
+    width: 100%
+    padding: 0.5em
+    border: 2px solid theme(text)
+    border-radius: 0.5em
+    background: theme(background)
+    color: theme(text)
+    font-size: 1.2rem
+    transition: all 0.3s ease
+    margin: 1em 0
+    margin-top: 3em
+    &:focus
+      border-color: theme(french-lilac)
+      background: theme(text)
+      color: theme(background)
+    &::placeholder,
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
+    &:-moz-placeholder,
+    &::-ms-input-placeholder
+      color: theme(text)
+
+  #search-results
+    display: flex
+    flex-direction: column
+    gap: 1em
+    list-style-type: none
+    margin-bottom: 3em
+    li
+      margin: 0
+      font-size: 1.2rem
+      &::before
+        content: '>'
+        color: theme(french-lilac)
+        margin-right: 0.5em

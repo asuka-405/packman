@@ -1,4 +1,6 @@
-/coredb /public/coredb.html 200
-/register-pkg /public/register-pkg.html 200
+/js/* /public/script/:splat 200
+/css/* /public/stylesheet/:splat 200
+/asset/* /public/asset/:splat 200
 /auth /public/auth/index.html 200
+/page/* /public/page/:splat 200
 /* /public/index.html   200

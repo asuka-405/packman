@@ -18,7 +18,16 @@ const client = new MongoClient(URL, {
   },
 })
 
-export const handler = async (event) => {
+export const handler = async (event, context) => {
+  const user = context.clientContext && context.clientContext.user
+
+  if (!user) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ message: "Unauthorized: User not logged in" }),
+    }
+  }
+
   if (event.httpMethod !== "POST")
     return {
       statusCode: 405,

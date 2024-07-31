@@ -1,0 +1,121 @@
+// Ensure you have a definition for the $bhagwa-shade variable
+$bhagwa-shade: #ff4500; // Example value, adjust as needed
+
+::webkit-scrollbar {
+  width: 12px;
+}
+
+::webkit-scrollbar-track {
+  width: 12px;
+  background: theme(background);
+}
+
+::webkit-scrollbar-thumb {
+  background: theme(primary);
+  border-radius: 6px;
+  border: 3px solid theme(background);
+}
+
+::webkit-scrollbar-thumb:hover {
+  background: theme(french-lilac);
+}
+
+#progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 7px;
+  background: intensify-color(theme(french-lilac), 0.8);
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+  }
+}
+
+.floating-container {
+  position: sticky;
+  left: 0;
+  right: 0;
+  bottom: 0.5em;
+
+  &.floating-container-right {
+    right: 0.5em;
+    left: auto;
+    bottom: auto !important;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .floating-entity {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    border-radius: 8px;
+  }
+}
+
+.box-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  width: fit-content;
+
+  &.box-list-vertical {
+    flex-direction: column;
+  }
+
+  .box {
+    text-decoration: none;
+    color: theme(text);
+    background-color: transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+
+    &.box-padding {
+      img {
+        transform: scale(0.8) translate(-60%, -60%);
+      }
+    }
+
+    &.box-bg {
+      background-color: theme(primary);
+      pointer-events: auto; // Ensure pointer events are enabled
+      z-index: 9999;
+
+      &:hover {
+        background-color: $bhagwa-shade;
+        cursor: pointer;
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover {
+      background-color: theme(primary);
+    }
+
+    &.active {
+      background-color: $bhagwa-shade;
+      color: theme(background);
+      pointer-events: auto; // Ensure pointer events are enabled
+      cursor: default;
+    }
+  }
+}

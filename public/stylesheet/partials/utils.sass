@@ -1,0 +1,51 @@
+@function intensify-color($color, $factor: 1.2)
+  $r: red($color)
+  $g: green($color)
+  $b: blue($color)
+  $a: alpha($color)
+
+  $r: min(round($r * $factor), 255)
+  $g: min(round($g * $factor), 255)
+  $b: min(round($b * $factor), 255)
+
+  @return rgba($r, $g, $b, $a)
+
+@mixin crop-image($width: 16, $height: 9)
+  position: relative
+  width: 100%
+  padding-top: calc(($height / $width) * 100%) // Maintain aspect ratio
+  overflow: hidden
+
+  img
+    position: absolute
+    top: 50%
+    left: 50%
+    height: auto
+    width: auto
+    max-height: none
+    max-width: none
+    transform: translate(-50%, -50%)
+
+@mixin tooltip
+  position: relative
+
+  &::before
+    content: attr(data-tooltip)
+    position: absolute
+    bottom: 100%
+    left: 50%
+    transform: translateX(-50%)
+    background-color: #333
+    color: #fff
+    padding: 5px
+    border-radius: 3px
+    white-space: nowrap
+    font-size: 12px
+    opacity: 0
+    visibility: hidden
+    transition: opacity 0.3s, visibility 0.3s
+    pointer-events: none
+
+  &:hover::before
+    opacity: 1
+    visibility: visible

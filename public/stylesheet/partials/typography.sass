@@ -1,0 +1,71 @@
+[class^="title"]
+  font-weight: 700
+  color: theme(primary)
+  position: relative
+
+.page-title
+  font-size: 5rem
+  line-height: 1
+  margin-top: 1em
+
+.title-large
+  font-size: 3rem
+  margin-top: 1em
+
+.title-medium
+  font-size: 2.5rem
+  margin-top: 1em
+
+.title-small
+  font-size: 2rem
+  margin-top: 1em
+
+.page-title,
+[class^="title"]
+  overflow-wrap: normal
+  word-break: normal
+  hyphens: none
+  margin-top: 1em
+  @media screen and (max-width: 768px)
+    overflow-wrap: break-word
+    word-break: break-word
+    hyphens: auto
+
+@media screen and (max-width: 768px)
+  .page-title
+    font-size: 4rem
+  .title-large
+    font-size: 2.5rem
+
+  .title-medium
+    font-size: 2rem
+
+  .title-small
+    font-size: 1.5rem
+
+.blockquote
+  font-style: italic
+  color: theme(secondary)
+  margin: 1em 0
+  padding: 0.5em
+  border-left: 5px solid theme(french-lilac)
+  max-width: 75%
+  @media screen and (max-width: 768px)
+    max-width: 90%
+
+.paragraph
+  margin: 1em 0
+
+.blockquote,
+.paragraph
+  overflow-wrap: break-word
+  word-break: break-word
+  hyphens: auto
+  text-align: justify
+  font-size: 1.2rem
+
+// [class^="highlight"]
+//   background-color: theme(tertiary)
+//   color: theme(tertiary-text)
+//   padding: 0.5em
+//   border-radius: 5px

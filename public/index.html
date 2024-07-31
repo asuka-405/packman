@@ -1,1 +1,101 @@
-multi language package repo incoming
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/js/index.js" defer></script>
+    <link rel="stylesheet" href="/css/index.css" />
+    <script
+      type="text/javascript"
+      src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+    ></script>
+    <title>PackMan</title>
+  </head>
+  <body>
+    <div id="progress"></div>
+    <div class="common" id="main"></div>
+    <nav class="sidebar">
+      <div class="sidebar-head">
+        <div class="sidebar-head-logo">
+          <span class="sidebar-head-logo__img">
+            <img src="/asset/logo.png" alt="indologia logo" />
+          </span>
+          <span class="sidebar-head-logo__name">PackMan</span>
+        </div>
+        <button class="sidebar__toggle">
+          <img class="icon" src="/asset/svg/close.svg" alt=">" />
+        </button>
+      </div>
+      <div class="sidebar-title"></div>
+      <ul class="sidebar-actions">
+        <li class="sidebar-actions__item">
+          <img class="icon" src="/asset/svg/home.svg" alt="home icon" />
+          <a
+            href="https://ksuryansh.xyz"
+            class="sidebar-actions__item-title internal-link"
+            >Home</a
+          >
+        </li>
+        <li class="sidebar-actions__item">
+          <img class="icon" src="/asset/svg/search.svg" alt="search icon" />
+          <a
+            data-link
+            href="/search"
+            class="sidebar-actions__item-title internal-link"
+            >Search</a
+          >
+        </li>
+        <li class="sidebar-actions__item">
+          <img class="icon" src="/asset/svg/archive.svg" alt="archive icon" />
+          <a
+            data-link
+            href="/core"
+            class="sidebar-actions__item-title internal-link"
+            >CoreDB</a
+          >
+        </li>
+        <li class="sidebar-actions__item">
+          <img
+            class="icon"
+            src="/asset/svg/add-pkg.svg"
+            alt="new package icon"
+          />
+          <a
+            data-link
+            href="/add"
+            class="sidebar-actions__item-title internal-link"
+            >Add Package</a
+          >
+        </li>
+        <li class="sidebar-actions__item">
+          <img
+            class="icon"
+            src="/asset/svg/download.svg"
+            alt="cli tool download"
+          />
+          <a
+            data-link
+            href="/download"
+            class="sidebar-actions__item-title internal-link"
+            >CLI tool</a
+          >
+        </li>
+        <li class="sidebar-actions__item">
+          <img class="icon" src="/asset/svg/login.svg" alt="login" />
+          <a
+            data-link
+            href="/login"
+            class="sidebar-actions__item-title internal-link"
+            >Login/Register</a
+          >
+        </li>
+      </ul>
+      <social-links></social-links>
+    </nav>
+
+    <!-- <footer class="footer common"></footer> -->
+    <!-- <div class="promo common">
+      made with <span class="heart">❤️</span> for the readers
+    </div> -->
+  </body>
+</html>

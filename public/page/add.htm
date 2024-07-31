@@ -1,0 +1,37 @@
+<section>
+  <form
+    class="form"
+    method="POST"
+    action="/.netlify/functions/register-pkg"
+    netlify
+  >
+    <h1 class="title-medium">Add package</h1>
+    <input type="text" name="name" placeholder="name of package" required />
+    <input
+      type="text"
+      name="repo"
+      placeholder="link of github repo to package"
+      required
+    />
+    <input
+      type="text"
+      name="description"
+      placeholder="description of package"
+      required
+    />
+    <input type="text" name="author" placeholder="author of package" required />
+    <input
+      type="text"
+      name="dist"
+      placeholder="absolute path to dist/bin(etc) dir"
+      required
+    />
+    <input
+      type="text"
+      name="keywords"
+      placeholder="keywords seperated by commas"
+      required
+    />
+    <button type="submit">Register</button>
+  </form>
+</section>

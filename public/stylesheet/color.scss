@@ -1,0 +1,44 @@
+// Define shades
+$primary-shade: #a981df;
+$french-lilac-shade: #e1baea;
+$neutral-shade: #111112;
+$success-shade: #7a806f;
+$caution-shade: #b7b6aa;
+$danger-shade: #e01829;
+$info-shade: #0720e4;
+$background-shade: #e0e0e0;
+$text-shade: #000000;
+$bhagwa-shade: #d85a4e;
+
+// Define themes as maps
+$light-theme: (
+  primary: $primary-shade,
+  french-lilac: $french-lilac-shade,
+  neutral: $neutral-shade,
+  success: $success-shade,
+  caution: $caution-shade,
+  danger: $danger-shade,
+  info: $info-shade,
+  background: $background-shade,
+  text: $text-shade,
+);
+
+$dark-theme: (
+  primary: $primary-shade,
+  french-lilac: $french-lilac-shade,
+  neutral: $neutral-shade,
+  success: $success-shade,
+  caution: $caution-shade,
+  danger: $danger-shade,
+  info: $info-shade,
+  background: $text-shade,
+  text: $background-shade,
+);
+
+// Assign a theme
+$theme: $dark-theme;
+
+// Function to get theme color
+@function theme($key) {
+  @return map-get($theme, $key);
+}

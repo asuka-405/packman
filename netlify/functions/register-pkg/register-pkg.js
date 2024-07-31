@@ -1,24 +1,24 @@
 import dotenv from "dotenv"
-if (process.env.NODE_ENV === "development") dotenv.config()
-
 import { MongoClient, ServerApiVersion } from "mongodb"
 import DB from "../db.js"
+if (process.env.NODE_ENV === "development") dotenv.config()
 
-const uri =
-  "mongodb+srv://" +
-  process.env.ATLAS_UNAME +
-  ":" +
-  process.env.ATLAS_PASSWD +
-  "@cluster0.c0p6hl1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const URL = `mongodb+srv://${process.env.ATLAS_UNAME}:${process.env.ATLAS_PASSWD}@cluster0.c0p6hl1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
-const client = new MongoClient(uri, {
+const client = new MongoClient(URL, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
   },
 })
+
 export const handler = async (event) => {
+  if (event.httpMethod !== "POST")
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: "Method Not Allowed" }),
+    }
   const params = new URLSearchParams(event.body)
   const requiredFields = [
     "name",
@@ -29,7 +29,6 @@ export const handler = async (event) => {
     "keywords",
   ]
   const missingFields = requiredFields.filter((field) => !params.has(field))
-
   if (missingFields.length)
     return {
       statusCode: 400,
@@ -68,16 +67,17 @@ export const handler = async (event) => {
 
   core = db.getDBFile()
 
-  await remoteDB.updateOne(
-    { name: "core.db" },
-    { $set: { file: core } },
-    { upsert: true }
-  )
+  // await remoteDB.updateOne(
+  //   { name: "core.db" },
+  //   { $set: { file: core } },
+  //   { upsert: true }
+  // )
 
   return {
     statusCode: 200,
     body: JSON.stringify({
       message: `Package ${pkgName} registered successfully`,
+      core,
     }),
   }
 }

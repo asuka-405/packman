@@ -1,3 +1,4 @@
-/upload /public/upload.html 200
+/coredb /public/coredb.html 200
+/register-pkg /public/register-pkg.html 200
 /auth /public/auth/index.html 200
-/*    /public/index.html   200
+/* /public/index.html   200

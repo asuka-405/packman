@@ -1,6 +1,6 @@
 export function dbFileToPackageList(dbFile) {
   const packages = []
-  for (const line of packages.split("\n"))
+  for (const line of dbFile.split("\n"))
     if (line === "") continue
     else {
       const [name, description, author, repo, dist, keywords] = line.split(";;")
@@ -13,15 +13,19 @@ export function dbFileToPackageList(dbFile) {
         keywords: keywords || "No keywords provided",
       })
     }
+  return packages
 }
 
 export function appendPackageToDbFile(dbFile, pkgObj) {
-  dbFile += `${pkg.name};;${pkg.description};;${pkg.author};;${pkg.repo};;${pkg.dist};;${pkg.keywords}\n`
+  dbFile += `${pkgObj.name};;${pkgObj.description};;${pkgObj.author};;${pkgObj.repo};;${pkgObj.dist};;${pkgObj.keywords}\n`
+  return dbFile
 }
 
-export function searchDbFile(packageList, pkgName) {
+export function searchPackageList(packageList, pkgName) {
+  console.log(packageList, pkgName)
+
   return packageList.filter((pkg) => {
-    return pkg.name.includes(query)
+    return pkg.name.includes(pkgName)
   })
 }
 

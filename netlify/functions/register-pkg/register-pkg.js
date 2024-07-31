@@ -4,7 +4,7 @@ import {
   appendPackageToDbFile,
   dbFileToPackageList,
   packageListToDbFile,
-  searchDbFile,
+  searchPackageList,
 } from "../db.js"
 if (process.env.NODE_ENV === "development") dotenv.config()
 
@@ -51,17 +51,19 @@ export const handler = async (event) => {
 
   const packageList = dbFileToPackageList(core)
   const packageName = params.get("name")
-  const isInDB = searchDbFile(packageList, packageName).length ? true : false
+  const isInDB = searchPackageList(packageList, packageName).length
+    ? true
+    : false
 
   if (isInDB)
     return {
       statusCode: 400,
       body: JSON.stringify({
-        error: `Package ${pkgName} already exists in the database`,
+        error: `Package ${packageName} already exists in the database`,
       }),
     }
 
-  appendPackageToDbFile(core, {
+  core = appendPackageToDbFile(core, {
     name: params.get("name"),
     repo: params.get("repo"),
     description: params.get("description"),
@@ -79,7 +81,7 @@ export const handler = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: `Package ${pkgName} registered successfully`,
+      message: `Package ${packageName} registered successfully`,
       core,
     }),
   }

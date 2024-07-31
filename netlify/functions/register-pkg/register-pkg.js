@@ -37,33 +37,33 @@ export const handler = async (event) => {
       }),
     }
 
-  await client.connect()
-  const remoteDB = client.db("packman-repo").collection("packages")
+  // await client.connect()
+  // const remoteDB = client.db("packman-repo").collection("packages")
 
-  let core = await remoteDB.findOne({ name: "core.db" })
-  if (core) core = core.file
-  else core = undefined
+  // let core = await remoteDB.findOne({ name: "core.db" })
+  // if (core) core = core.file
+  // else core = undefined
 
-  const db = new DB(core)
-  const pkgName = params.get("name")
-  const isInDB = db.search(pkgName).length ? true : false
+  // const db = new DB(core)
+  // const pkgName = params.get("name")
+  // const isInDB = db.search(pkgName).length ? true : false
 
-  if (isInDB)
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        error: `Package ${pkgName} already exists in the database`,
-      }),
-    }
+  // if (isInDB)
+  //   return {
+  //     statusCode: 400,
+  //     body: JSON.stringify({
+  //       error: `Package ${pkgName} already exists in the database`,
+  //     }),
+  //   }
 
-  db.append({
-    name: params.get("name"),
-    repo: params.get("repo"),
-    description: params.get("description"),
-    author: params.get("author"),
-    dist: params.get("dist"),
-    keywords: params.get("keywords"),
-  })
+  // db.append({
+  //   name: params.get("name"),
+  //   repo: params.get("repo"),
+  //   description: params.get("description"),
+  //   author: params.get("author"),
+  //   dist: params.get("dist"),
+  //   keywords: params.get("keywords"),
+  // })
 
   // core = db.getDBFile()
 

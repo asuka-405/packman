@@ -4,7 +4,20 @@ import Router from "./router.js"
 import initializeSearch from "./tasks/search.js"
 import { initializeSidebar } from "./tasks/sidebar.js"
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  if (localStorage.getItem("coreDB") && localStorage.getItem("lastUpdated")) {
+    const lastUpdated = localStorage.getItem("lastUpdated")
+    const currentTime = new Date().getTime()
+    const timeDifference = currentTime - lastUpdated
+    if (timeDifference > 21600000) window.coreDB = null
+    else window.coreDB = JSON.parse(localStorage.getItem("coreDB"))
+  }
+  if (!window.coreDB)
+    await getCoreDB().then((coreDB) => {
+      localStorage.setItem("coreDB", JSON.stringify(coreDB))
+      localStorage.setItem("lastUpdated", new Date().getTime())
+      window.coreDB = coreDB
+    })
   window.router = new Router({ defaultPage: "search", loader: LOADER })
   window.addEventListener("scroll", updateScrollProgress)
   window.router.bindCallback("*", handleHighlightedImages)
@@ -22,19 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
   initializeSidebar()
-  if (localStorage.getItem("coreDB") && localStorage.getItem("lastUpdated")) {
-    const lastUpdated = localStorage.getItem("lastUpdated")
-    const currentTime = new Date().getTime()
-    const timeDifference = currentTime - lastUpdated
-    if (timeDifference > 21600000) return
-    window.coreDB = JSON.parse(localStorage.getItem("coreDB"))
-  }
-  if (!window.coreDB)
-    getCoreDB().then((coreDB) => {
-      localStorage.setItem("coreDB", JSON.stringify(coreDB))
-      localStorage.setItem("lastUpdated", new Date().getTime())
-      window.coreDB = coreDB
-    })
 })
 
 function toggleScrollProgress() {

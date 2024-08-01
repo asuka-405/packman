@@ -1,12 +1,13 @@
 import { DBArchiveItemTemplate, LOADER } from "./constants.js"
 import getCoreDB from "./coredb.js"
 import Router from "./router.js"
+import CustomSpacer from "./spacer.js"
 import initializeSearch from "./tasks/search.js"
 import { initializeSidebar } from "./tasks/sidebar.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadCoreDB()
-  window.router = new Router({ defaultPage: "search", loader: LOADER })
+  window.router = new Router({ defaultPage: "home", loader: LOADER })
   window.addEventListener("scroll", updateScrollProgress)
   window.router.bindCallback("*", handleHighlightedImages)
   window.router.bindCallback("*", toggleScrollProgress)
@@ -78,3 +79,5 @@ function handleHighlightedImages() {
     })
   })
 }
+
+customElements.define("custom-spacer", CustomSpacer)

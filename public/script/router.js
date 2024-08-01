@@ -3,7 +3,6 @@ export default class Router {
   #default
   #contentHolderID
   #renderCallbacks = []
-  #cleanUpCallbacks = []
   #loader
   #navigating = false // Flag to prevent multiple navigations
 

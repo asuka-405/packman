@@ -24,6 +24,52 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.reload()
     }
   })
+
+  window.router.bindCallback("add", () => {
+    const form = document.querySelector(".form")
+
+    form.addEventListener("submit", function (event) {
+      const name = form.querySelector('input[name="name"]').value.trim()
+      const repo = form.querySelector('input[name="repo"]').value.trim()
+      const description = form
+        .querySelector('input[name="description"]')
+        .value.trim()
+      const author = form.querySelector('input[name="author"]').value.trim()
+      const dist = form.querySelector('input[name="dist"]').value.trim()
+      const keywords = form.querySelector('input[name="keywords"]').value.trim()
+
+      let valid = true
+      let errorMessage = ""
+
+      // Check for empty fields
+      if (!name || !repo || !description || !author || !dist || !keywords) {
+        valid = false
+        errorMessage += "All fields are required.\n"
+      }
+
+      // Validate URL (basic check)
+      const urlPattern =
+        /^(https?:\/\/)?([\w\d-]+\.)+[a-z]{2,6}([\/\w\d-]*)*\/?$/i
+      if (repo && !urlPattern.test(repo)) {
+        valid = false
+        errorMessage += "Please enter a valid GitHub repository URL.\n"
+      }
+
+      // Validate keywords
+      const keywordsArray = keywords.split(",").map((keyword) => keyword.trim())
+      if (keywordsArray.length < 1) {
+        valid = false
+        errorMessage += "Please enter at least one keyword.\n"
+      }
+
+      // Show error message if validation fails
+      if (!valid) {
+        alert(errorMessage)
+        event.preventDefault() // Prevent form submission
+      }
+    })
+  })
+
   initializeSidebar()
 })
 

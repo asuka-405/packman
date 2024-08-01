@@ -22,3 +22,30 @@ export const LOADER = `<svg id="riseAndShine" version="1.1" id="Ebene_1" xmlns="
             </g>
           </g>
         </svg>`
+
+export const DBArchiveItemTemplate = (item) => {
+  const tags = item.keywords.split(",").map((tag) => {
+    return `<span class="tag">${tag
+      .trim()
+      .replace(/\s/g, "-")
+      .toLowerCase()}</span>`
+  })
+
+  return `
+    <li class="article-preview">
+      <div class="article-preview-content">
+        <h2 class="article-preview-title">
+          <a href="${item.repo}">${item.name}</a>
+        </h2>
+        <div class="article-preview-meta">
+          <p class="article-preview-desc">
+            ${item.description}
+          </p>
+          <p class="article-preview-tags">
+            ${tags.join("")}
+          </p>
+        </div>
+      </div>
+    </li>
+  `
+}

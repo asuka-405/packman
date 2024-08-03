@@ -14,14 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.router.bindCallback("search", initializeSearch)
   window.router.bindCallback("core", loadCoreDBArchive)
   window.router.bindCallback("login", () => {
-    try {
-      netlifyIdentity.init({
-        container: "#netlify-modal",
-        locale: "en",
-      })
-    } catch (e) {
-      console.error("Netlify Identity is not loaded.", e)
-    }
     netlifyIdentity.on("login", () => {
       netlifyIdentity.close()
       successPage("You have successfully logged in.")
@@ -34,7 +26,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       netlifyIdentity.close()
       failedPage(error)
     })
-    netlifyIdentity.open()
+    try {
+      netlifyIdentity.init({
+        container: "#netlify-modal",
+        locale: "en",
+      })
+      netlifyIdentity.open()
+    } catch (e) {
+      console.error("Netlify Identity is not loaded.", e)
+    }
   })
 
   window.router.bindCallback("add", () => {

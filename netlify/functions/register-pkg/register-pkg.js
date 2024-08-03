@@ -19,7 +19,11 @@ const client = new MongoClient(URL, {
 })
 
 export const handler = async (event, context) => {
-  const user = context.clientContext && context.clientContext.user
+  const rawNetlifyContext = context.clientContext.custom.netlify
+  const netlifyContext = Buffer.from(rawNetlifyContext, "base64").toString(
+    "utf-8"
+  )
+  const { identity, user } = JSON.parse(netlifyContext)
 
   if (!user) {
     return {

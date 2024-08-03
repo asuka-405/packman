@@ -21,12 +21,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       })
       netlifyIdentity.open()
     } catch (e) {
-      window.location.reload()
+      console.error("Netlify Identity is not loaded.")
     }
   })
 
   window.router.bindCallback("add", () => {
     const form = document.querySelector(".form")
+    if (!form) window.location.reload()
 
     form.addEventListener("submit", function (event) {
       const name = form.querySelector('input[name="name"]').value.trim()
@@ -77,6 +78,7 @@ async function loadCoreDBArchive() {
   await loadCoreDB()
   const coreDBArchive = window.coreDB
   const archiveList = document.querySelector(".archive-list")
+  if (!archiveList) window.location.reload()
   archiveList.innerHTML = ""
   coreDBArchive.forEach((item) => {
     archiveList.innerHTML += DBArchiveItemTemplate(item)

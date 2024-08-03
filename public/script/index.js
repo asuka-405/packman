@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         description,
         author,
         dist,
-        keywords: keywordsArray,
+        keywords,
       }
 
       fetch("/.netlify/functions/your-function", {
@@ -129,6 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             `
         })
     })
+    loadCoreDB(true)
   })
 
   initializeSidebar()
@@ -145,12 +146,12 @@ async function loadCoreDBArchive() {
   })
 }
 
-async function loadCoreDB() {
+async function loadCoreDB(force = false) {
   if (localStorage.getItem("coreDB") && localStorage.getItem("lastUpdated")) {
     const lastUpdated = localStorage.getItem("lastUpdated")
     const currentTime = new Date().getTime()
     const timeDifference = currentTime - lastUpdated
-    if (timeDifference > 21600000) window.coreDB = null
+    if (timeDifference > 21600000 || force) window.coreDB = null
     else window.coreDB = JSON.parse(localStorage.getItem("coreDB"))
   }
   if (!window.coreDB)

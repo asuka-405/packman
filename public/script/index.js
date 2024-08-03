@@ -151,12 +151,16 @@ async function loadCoreDBArchive() {
   })
 }
 
-async function loadCoreDB(force = false) {
-  if (localStorage.getItem("coreDB") && localStorage.getItem("lastUpdated")) {
+async function loadCoreDB(force) {
+  if (force) window.coreDB = undefined
+  else if (
+    localStorage.getItem("coreDB") &&
+    localStorage.getItem("lastUpdated")
+  ) {
     const lastUpdated = localStorage.getItem("lastUpdated")
     const currentTime = new Date().getTime()
     const timeDifference = currentTime - lastUpdated
-    if (timeDifference > 21600000 || force) window.coreDB = null
+    if (timeDifference > 21600000) window.coreDB = null
     else window.coreDB = JSON.parse(localStorage.getItem("coreDB"))
   }
   if (!window.coreDB)

@@ -23,18 +23,12 @@ export const handler = async (event, context) => {
   const netlifyContext = Buffer.from(rawNetlifyContext, "base64").toString(
     "utf-8"
   )
-  const { identity, user } = JSON.parse(netlifyContext)
+  const { identity } = JSON.parse(netlifyContext)
 
-  if (!user) {
+  if (!identity.token) {
     return {
       statusCode: 401,
-      body: JSON.stringify({
-        message: "Unauthorized: User not logged in",
-        rawNetlifyContext,
-        netlifyContext,
-        identity,
-        user,
-      }),
+      body: JSON.stringify({ message: "Unauthorized: User not logged in" }),
     }
   }
 

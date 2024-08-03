@@ -28,7 +28,7 @@ export const handler = async (event, context) => {
   if (!identity.token) {
     return {
       statusCode: 401,
-      body: JSON.stringify({ message: "Unauthorized: User not logged in" }),
+      body: JSON.stringify({ error: "Unauthorized: User not logged in" }),
     }
   }
 
@@ -94,8 +94,7 @@ export const handler = async (event, context) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: `Package ${packageName} registered successfully`,
-      core,
+      message: `Package ${packageName} successfully registered\nyou can search it up on <a data-link href="/search">search page</a>`,
     }),
   }
 }

@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!form) window.location.reload()
 
     form.addEventListener("submit", function (event) {
+      event.preventDefault() // Prevent form submission
+
       const name = form.querySelector('input[name="name"]').value.trim()
       const repo = form.querySelector('input[name="repo"]').value.trim()
       const description = form
@@ -66,8 +68,66 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Show error message if validation fails
       if (!valid) {
         alert(errorMessage)
-        event.preventDefault() // Prevent form submission
+        return // Stop the form submission
       }
+
+      // If validation passes, submit the form data to Netlify Function
+      const formData = {
+        name,
+        repo,
+        description,
+        author,
+        dist,
+        keywords: keywordsArray,
+      }
+
+      fetch("/.netlify/functions/your-function", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle successful response
+          const main = document.querySelector("#main")
+          if (data.success) {
+            main.innerHTML = `
+                <section>
+                  <h1 class="page-title">200 Success</h1>
+                  <blockquote class="blockquote">
+                    <p>
+                      ${data.message}
+                    </p>
+                  </blockquote>
+                </section>
+            `
+          } else {
+            main.innerHTML = `
+                <section>
+                  <h1 class="page-title">500 Failed</h1>
+                  <blockquote class="blockquote">
+                    <p>
+                      ${data.error}
+                    </p>
+                  </blockquote>
+                </section>
+            `
+          }
+        })
+        .catch((error) => {
+          main.innerHTML = `
+                <section>
+                  <h1 class="page-title">500 Error</h1>
+                  <blockquote class="blockquote">
+                    <p>
+                      ${error}
+                    </p>
+                  </blockquote>
+                </section>
+            `
+        })
     })
   })
 

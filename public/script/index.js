@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!form) window.location.reload()
 
     form.addEventListener("submit", function (event) {
-      event.preventDefault() // Prevent form submission
+      event.preventDefault()
 
       const name = form.querySelector('input[name="name"]').value.trim()
       const repo = form.querySelector('input[name="repo"]').value.trim()
@@ -81,7 +81,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         keywords,
       }
 
-      fetch("/.netlify/functions/your-function", {
+      console.log(formData)
+
+      fetch("/.netlify/functions/register-pkg", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +94,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         .then((data) => {
           // Handle successful response
           const main = document.querySelector("#main")
-          if (data.success) {
+          if (data.message) {
+            history.pushState({}, "", "/success")
             main.innerHTML = `
                 <section>
                   <h1 class="page-title">200 Success</h1>
@@ -104,6 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </section>
             `
           } else {
+            history.pushState({}, "", "/failed")
             main.innerHTML = `
                 <section>
                   <h1 class="page-title">500 Failed</h1>
@@ -117,9 +121,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
         })
         .catch((error) => {
+          history.pushState({}, "", "/failed")
           main.innerHTML = `
                 <section>
-                  <h1 class="page-title">500 Error</h1>
+                  <h1 class="page-title">400 Error</h1>
                   <blockquote class="blockquote">
                     <p>
                       ${error}

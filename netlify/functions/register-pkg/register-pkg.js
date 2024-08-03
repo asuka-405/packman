@@ -3,7 +3,6 @@ import { MongoClient, ServerApiVersion } from "mongodb"
 import {
   appendPackageToDbFile,
   dbFileToPackageList,
-  packageListToDbFile,
   searchPackageList,
 } from "../db.js"
 if (process.env.NODE_ENV === "development") dotenv.config()
@@ -37,16 +36,18 @@ export const handler = async (event, context) => {
       statusCode: 405,
       body: JSON.stringify({ error: "Method Not Allowed" }),
     }
-  const params = new URLSearchParams(event.body)
-  const requiredFields = [
+
+  const params = JSON.parse(event.body)
+
+  const missingFields = [
     "name",
     "repo",
     "description",
     "author",
     "dist",
     "keywords",
-  ]
-  const missingFields = requiredFields.filter((field) => !params.has(field))
+  ].filter((field) => !params[field].length)
+
   if (missingFields.length)
     return {
       statusCode: 400,
@@ -63,12 +64,8 @@ export const handler = async (event, context) => {
   else core = undefined
 
   const packageList = dbFileToPackageList(core)
-  const packageName = params.get("name")
-  const isInDB = searchPackageList(packageList, packageName).length
-    ? true
-    : false
 
-  if (isInDB)
+  if (searchPackageList(packageList, params.name))
     return {
       statusCode: 400,
       body: JSON.stringify({
@@ -77,12 +74,12 @@ export const handler = async (event, context) => {
     }
 
   core = appendPackageToDbFile(core, {
-    name: params.get("name"),
-    repo: params.get("repo"),
-    description: params.get("description"),
-    author: params.get("author"),
-    dist: params.get("dist"),
-    keywords: params.get("keywords"),
+    name: params.name,
+    repo: params.repo,
+    description: params.description,
+    author: params.author,
+    dist: params.dist,
+    keywords: params.keywords,
   })
 
   await remoteDB.updateOne(
@@ -94,7 +91,7 @@ export const handler = async (event, context) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: `Package ${packageName} successfully registered\nyou can search it up on <a data-link href="/search">search page</a>`,
+      message: `Package ${params.name} successfully registered\nyou can search it up on <a data-link href="/search">search page</a>`,
     }),
   }
 }

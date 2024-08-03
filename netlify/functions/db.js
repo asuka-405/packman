@@ -22,11 +22,14 @@ export function appendPackageToDbFile(dbFile, pkgObj) {
 }
 
 export function searchPackageList(packageList, pkgName) {
-  console.log(packageList, pkgName)
-
-  return packageList.filter((pkg) => {
-    return pkg.name.includes(pkgName)
+  let found = false
+  packageList.filter((pkg) => {
+    if (pkg.name === pkgName) {
+      found = true
+      return true
+    } else return false
   })
+  return found
 }
 
 export function packageListToDbFile(packageList) {

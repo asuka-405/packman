@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="/js/index.js" defer></script>
-    <link rel="stylesheet" href="/css/index.css" />
-    <link rel="manifest" href="/manifest.json" />
     <script
       type="text/javascript"
       src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+      defer
     ></script>
+    <script type="module" src="/js/index.js" defer></script>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="darkreader-lock" />
     <title>PackMan</title>
   </head>
@@ -83,13 +84,22 @@
             >CLI tool</a
           >
         </li>
-        <li class="sidebar-actions__item">
+        <li class="sidebar-actions__item" id="login-btn">
           <img class="icon" src="/asset/svg/login.svg" alt="login" />
           <a
             data-link
             href="/login"
             class="sidebar-actions__item-title internal-link"
             >Login/Register</a
+          >
+        </li>
+        <li class="sidebar-actions__item" id="login-btn">
+          <img class="icon" src="/asset/svg/github.svg" alt="login" />
+          <a
+            href="https://github.com/asuka-405/packman"
+            target="_blank"
+            class="sidebar-actions__item-title internal-link"
+            >Github</a
           >
         </li>
       </ul>

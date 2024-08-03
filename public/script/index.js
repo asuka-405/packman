@@ -19,10 +19,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         container: "#netlify-modal",
         locale: "en",
       })
-      netlifyIdentity.open()
     } catch (e) {
-      console.error("Netlify Identity is not loaded.")
+      console.error("Netlify Identity is not loaded.", e)
     }
+    netlifyIdentity.on("login", () => {
+      netlifyIdentity.close()
+      successPage("You have successfully logged in.")
+    })
+    netlifyIdentity.on("logout", () => {
+      netlifyIdentity.close()
+      successPage("You have successfully logged out.")
+    })
+    netlifyIdentity.on("error", (error) => {
+      netlifyIdentity.close()
+      failedPage(error)
+    })
+    netlifyIdentity.open()
   })
 
   window.router.bindCallback("add", () => {
@@ -91,48 +103,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         body: JSON.stringify(formData),
       })
         .then((response) => response.json())
-        .then((data) => {
-          // Handle successful response
-          const main = document.querySelector("#main")
-          if (data.message) {
-            history.pushState({}, "", "/success")
-            main.innerHTML = `
-                <section>
-                  <h1 class="page-title">200 Success</h1>
-                  <blockquote class="blockquote">
-                    <p>
-                      ${data.message}
-                    </p>
-                  </blockquote>
-                </section>
-            `
-          } else {
-            history.pushState({}, "", "/failed")
-            main.innerHTML = `
-                <section>
-                  <h1 class="page-title">500 Failed</h1>
-                  <blockquote class="blockquote">
-                    <p>
-                      ${data.error}
-                    </p>
-                  </blockquote>
-                </section>
-            `
-          }
-        })
-        .catch((error) => {
-          history.pushState({}, "", "/failed")
-          main.innerHTML = `
-                <section>
-                  <h1 class="page-title">400 Error</h1>
-                  <blockquote class="blockquote">
-                    <p>
-                      ${error}
-                    </p>
-                  </blockquote>
-                </section>
-            `
-        })
+        .then((data) =>
+          data.message ? successPage(data.message) : failedPage(data.error)
+        )
+        .catch((error) => failedPage(error))
     })
     loadCoreDB(true)
   })
@@ -196,6 +170,30 @@ function handleHighlightedImages() {
       image.classList.toggle("highlighted-content")
     })
   })
+}
+
+function successPage(message) {
+  showMessagePage("/success", "Success", message)
+}
+
+function failedPage(message) {
+  showMessagePage("/failed", "Failed", message)
+}
+
+function showMessagePage(path, heading, message) {
+  history.pushState({}, "")
+  const main = document.querySelector("#main")
+  main.innerHTML = `
+      <section>
+        <h1 class="page-title
+        ">${heading || "FYI"}</h1>
+        <blockquote class="blockquote">
+          <p>
+            ${message || "This page is under construction."}
+          </p>
+        </blockquote>
+      </section>
+  `
 }
 
 customElements.define("custom-spacer", CustomSpacer)

@@ -35,7 +35,7 @@ export const DBArchiveItemTemplate = (item) => {
     <li class="article-preview">
       <div class="article-preview-content">
         <h2 class="article-preview-title">
-          <a href="${item.repo}">${item.name}</a>
+          <a target="_blank" href="${item.repo}">${item.name}</a>
         </h2>
         <div class="article-preview-meta">
           <p class="article-preview-desc">

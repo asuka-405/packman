@@ -28,7 +28,13 @@ export const handler = async (event, context) => {
   if (!user) {
     return {
       statusCode: 401,
-      body: JSON.stringify({ message: "Unauthorized: User not logged in" }),
+      body: JSON.stringify({
+        message: "Unauthorized: User not logged in",
+        rawNetlifyContext,
+        netlifyContext,
+        identity,
+        user,
+      }),
     }
   }
 

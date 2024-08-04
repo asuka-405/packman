@@ -58,6 +58,13 @@ export default class Router {
 
   renderContent(html) {
     document.getElementById(this.#contentHolderID).innerHTML = html
+    window.location.pathname.includes(".md")
+      ? document
+          .getElementById(this.#contentHolderID)
+          .classList.add("markdown-body")
+      : document
+          .getElementById(this.#contentHolderID)
+          .classList.remove("markdown-body")
     this.#renderCallbacks.forEach((callback) => {
       const path = window.location.pathname
       const page = path.slice(1) // Remove leading slash

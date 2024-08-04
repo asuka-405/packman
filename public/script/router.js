@@ -31,7 +31,14 @@ export default class Router {
       const path = window.location.pathname
       const page = path === "/" ? this.#default : path.slice(1) // Remove leading slash
       this.renderContent(this.#loader)
-      const content = await this.fetchRoute(`/${this.#root}/${page}.htm`)
+      const content = path.includes(".md")
+        ? await fetch(`/${this.#root}/${page}`)
+            .then((res) => res.text())
+            .then((text) => marked.parse(text))
+            .then((html) => {
+              return `<section class="markdown">${html}</section>`
+            })
+        : await this.fetchRoute(`/${this.#root}/${page}.htm`)
       this.renderContent(content)
     } finally {
       this.#navigating = false
@@ -39,7 +46,6 @@ export default class Router {
   }
 
   async fetchRoute(route) {
-    console.log(route)
     try {
       let res = await fetch(route)
       if (!res.ok) res = await fetch(`/${this.#root}/404.htm`)

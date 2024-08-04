@@ -7,6 +7,12 @@
       type="text/javascript"
       src="https://identity.netlify.com/v1/netlify-identity-widget.js"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module" src="/js/index.js" defer></script>
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="manifest" href="/manifest.json" />
@@ -15,7 +21,7 @@
   </head>
   <body>
     <div id="progress"></div>
-    <div class="common" id="main"></div>
+    <div class="common markdown-body" id="main"></div>
     <nav class="sidebar">
       <div class="sidebar-head">
         <div class="sidebar-head-logo">

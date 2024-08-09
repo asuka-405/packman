@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   window.router.bindCallback("add", () => {
     const form = document.querySelector(".form")
-    if (!form) window.location.reload()
+    if (!form) window.router.navigateTo("/add")
 
     form.addEventListener("submit", function (event) {
       event.preventDefault()
@@ -118,7 +118,7 @@ async function loadCoreDBArchive() {
   await loadCoreDB()
   const coreDBArchive = window.coreDB
   const archiveList = document.querySelector(".archive-list")
-  if (!archiveList) window.location.reload()
+  if (!archiveList) window.router.navigateTo("/core")
   archiveList.innerHTML = ""
   coreDBArchive.forEach((item) => {
     archiveList.innerHTML += DBArchiveItemTemplate(item)

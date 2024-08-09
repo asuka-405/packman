@@ -3,4 +3,4 @@
 /asset/* /public/asset/:splat 200
 /auth /public/auth/index.html 200
 /page/* /public/page/:splat 200
-/* /public/index.html   200
+/* /public/index.html 200

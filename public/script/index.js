@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   window.router.bindCallback("add", () => {
     const form = document.querySelector(".form")
-    if (!form) window.router.navigateTo("/add")
+    if (!form) window.location.reload()
 
     form.addEventListener("submit", function (event) {
       event.preventDefault()

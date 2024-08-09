@@ -44,6 +44,9 @@ article, section
 section
   min-height: 100dvh
 
+img
+  border-radius: 4px
+
 .pagination
   width: 200px
 
@@ -76,8 +79,14 @@ section
 section
   padding: 1em
 
+.list
+  list-style-type: none
+  li
+    &::before
+      content: attr(data-bullet)
+
 a.link
-  color: intensify-color(theme(french-lilac), 0.5)
+  color: intensify-color(theme(french-lilac), 0.7)
   text-decoration: none
   font-weight: bolder
   width: fit-content
